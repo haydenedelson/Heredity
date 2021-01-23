@@ -1,7 +1,45 @@
 # Heredity
 Given a family tree and some information about population-level gene presence, creates a Bayesian Network for gene inheritance.
 
-Input: family tree csv that indicates whether second-or-older generation family members exhibit a particlar trait (observation), from which genetic information (hidden state) may be inferred.  E.g.:
+First, in `PROBS` dict, input known information about the general population rate of the gene; the probability of having the observable trait given 0, 1, or 2 copies of the gene; and the probability of gene mutation. E.g.:
+
+```
+PROBS = {
+
+    # Unconditional probabilities for having gene
+    "gene": {
+        2: 0.01,
+        1: 0.03,
+        0: 0.96
+    },
+
+    "trait": {
+
+        # Probability of trait given two copies of gene
+        2: {
+            True: 0.65,
+            False: 0.35
+        },
+
+        # Probability of trait given one copy of gene
+        1: {
+            True: 0.56,
+            False: 0.44
+        },
+
+        # Probability of trait given no gene
+        0: {
+            True: 0.01,
+            False: 0.99
+        }
+    },
+
+    # Mutation probability
+    "mutation": 0.01
+}
+```
+
+Command-line input: family tree csv that indicates whether second-or-older generation family members exhibit a particlar trait (observation), from which genetic information (hidden state) may be inferred.  E.g.:
 
 ![Harry Potter family tree](https://github.com/haydenedelson/Heredity/blob/main/assets/Harry_family_tree.png)
 
